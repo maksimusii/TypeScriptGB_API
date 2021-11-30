@@ -35,8 +35,8 @@ export class PlaceRestController {
       coordinates: Joi.string()
         .pattern(new RegExp('^[0-9]{1,3}.[0-9]{1,15},[0-9]{1,3}.[0-9]{1,15}$'))
         .required(),
-      checkInDate: Joi.date().timestamp('unix').min(minDate).required(),
-      checkOutDate: Joi.date().timestamp('unix').greater(Joi.ref('checkInDate')).required(),
+      checkInDate: Joi.date().timestamp(undefined).min(minDate).required(),
+      checkOutDate: Joi.date().timestamp(undefined).greater(Joi.ref('checkInDate')).required(),
       maxPrice: Joi.number().min(1).default(0)
     });
     const validationResult = filterSchema.validate(query);
@@ -71,8 +71,8 @@ export class PlaceRestController {
     const minDate = DateHelper.resetTimeInDate(new Date());
     const query: Partial<BookingPayload> = params!.query || {};
     const bookingSchema = Joi.object<BookingPayload>({
-      checkInDate: Joi.date().timestamp('unix').min(minDate).required(),
-      checkOutDate: Joi.date().timestamp('unix').greater(Joi.ref('checkInDate')).required(),
+      checkInDate: Joi.date().timestamp(undefined).min(minDate).required(),
+      checkOutDate: Joi.date().timestamp(undefined).greater(Joi.ref('checkInDate')).required(),
     });
     const validationResult = bookingSchema.validate(query);
 
