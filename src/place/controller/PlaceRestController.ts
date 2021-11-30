@@ -18,7 +18,7 @@ export class PlaceRestController {
       throw new BadRequest();
     }
 
-    const coordinates: string = params?.query?.coordinates || '';
+    const coordinates: string = params!.query!.coordinates || '';
     const place = await this.placeRepository.get(numericId);
 
     if (place != null && coordinates === '') {
@@ -29,7 +29,7 @@ export class PlaceRestController {
   }
 
   public async find(params?: Params): Promise<Place[]> {
-    const query: Partial<FilterPayload> = params?.query || {};
+    const query: Partial<FilterPayload> = params!.query || {};
     const minDate = DateHelper.resetTimeInDate(new Date());
     const filterSchema = Joi.object<FilterPayload>({
       coordinates: Joi.string()
@@ -63,13 +63,13 @@ export class PlaceRestController {
       throw new BadRequest('Place ID is not correct.');
     }
 
-    const placeToBook = await this.get(id);
+    const placeToBook = await this.get(id, params);
     if (placeToBook == null) {
       throw new NotFound('Place not found.');
     }
 
     const minDate = DateHelper.resetTimeInDate(new Date());
-    const query: Partial<BookingPayload> = params?.query || {};
+    const query: Partial<BookingPayload> = params!.query || {};
     const bookingSchema = Joi.object<BookingPayload>({
       checkInDate: Joi.date().timestamp('unix').min(minDate).required(),
       checkOutDate: Joi.date().timestamp('unix').greater(Joi.ref('checkInDate')).required(),

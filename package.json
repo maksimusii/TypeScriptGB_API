@@ -4,8 +4,8 @@
   "description": "House rent API",
   "scripts": {
     "build": "tsc",
-    "restore-data": "cp ./data/db.backup.json ./data/db.json",
-    "start": "npm run restore-data && TZ=UTC nodemon ./dist/index.js --watch"
+    "restore-data": "type .\\data\\db.backup.json > .\\data\\db.json",
+    "start": "npm run restore-data && nodemon ./dist/index.js --watch"
   },
   "dependencies": {
     "@feathersjs/express": "^4.5.11",
