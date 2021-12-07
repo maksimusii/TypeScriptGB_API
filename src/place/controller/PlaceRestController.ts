@@ -18,9 +18,8 @@ export class PlaceRestController {
       throw new BadRequest();
     }
 
-    const coordinates: string = params!.query!.coordinates || '';
+    const coordinates: string = params?.query?.coordinates || '';
     const place = await this.placeRepository.get(numericId);
-
     if (place != null && coordinates === '') {
       place.remoteness = 0;
     }
